@@ -8,7 +8,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
 -->
 
 <link rel="import" href="../polymer/polymer-element.html">
-<script src="chart-labels-mapper.js"></script>
+<link rel="import" href="chart-labels-mapper.html">
 
 <dom-module id="vaadin-chart-series">
   <script>
@@ -186,7 +186,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
          * @param series Object of type `Highcharts.Series`
          */
         setSeries(series) {
-          if (!(series instanceof Highcharts.Series)) {
+          if (!(series instanceof window.Highcharts.Series)) {
             throw new TypeError('series should be Highcharts.Series');
           }
           this._series = series;
@@ -249,7 +249,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
         }
 
         __hasSeriesConfig() {
-          return this._series instanceof Highcharts.Series;
+          return this._series instanceof window.Highcharts.Series;
         }
 
       }
@@ -260,7 +260,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
        * @namespace Vaadin
        */
       window.Vaadin = window.Vaadin || {};
-      Vaadin.ChartSeriesElement = ChartSeriesElement;
+      window.Vaadin.ChartSeriesElement = ChartSeriesElement;
     }
   </script>
 </dom-module>

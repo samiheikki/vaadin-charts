@@ -16,20 +16,9 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
 
 <link rel="import" href="vaadin-chart-default-theme.html">
 
-<script src="../highcharts/js/highstock.js"></script>
-<!-- For some chart types, an error is raised if accessibility is added after highcharts-3d module -->
-<script src="../highcharts/js/modules/accessibility.js"></script>
-<script src="../highcharts/js/highcharts-more.js"></script>
-<script src="../highcharts/js/highcharts-3d.js"></script>
-<script src="../highcharts/js/modules/data.js"></script>
-<script src="../highcharts/js/modules/drilldown.js"></script>
-<script src="../highcharts/js/modules/exporting.js"></script>
-<script src="../highcharts/js/modules/funnel.js"></script>
-<script src="../highcharts/js/modules/heatmap.js"></script>
-<script src="../highcharts/js/modules/solid-gauge.js"></script>
-<script src="../highcharts/js/modules/treemap.js"></script>
-<script src="./chart-temporary-display.js"></script>
+<link rel="import" href="highcharts-imports.html">
 
+<link rel="import" href="chart-temporary-display.html">
 <link rel="import" href="vaadin-chart-series.html">
 
 <dom-module id="vaadin-chart">
@@ -679,9 +668,9 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
           // Workaround for https://github.com/highcharts/highcharts/issues/7523
           this.__ensureObjectPath(options, 'drilldown.activeDataLabelStyle');
           if (this.timeline) {
-            this._configuration = Highcharts.stockChart(this.$.chart, options);
+            this._configuration = window.Highcharts.stockChart(this.$.chart, options);
           } else {
-            this._configuration = Highcharts.chart(this.$.chart, options);
+            this._configuration = window.Highcharts.chart(this.$.chart, options);
           }
         }
 
@@ -768,14 +757,14 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
         }
 
         __makeConfigurationBuffer(target, source) {
-          const _source = Highcharts.merge(source);
-          const _target = Highcharts.merge(target);
+          const _source = window.Highcharts.merge(source);
+          const _target = window.Highcharts.merge(target);
 
           this.__mergeConfigurationArray(_target, _source, 'series');
           this.__mergeConfigurationArray(_target, _source, 'xAxis');
           this.__mergeConfigurationArray(_target, _source, 'yAxis');
 
-          return Highcharts.merge(_target, _source);
+          return window.Highcharts.merge(_target, _source);
         }
 
         __mergeConfigurationArray(target, configuration, entry) {
@@ -790,7 +779,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
 
           const maxLength = Math.max(target[entry].length, configuration[entry].length);
           for (let i = 0; i < maxLength; i++) {
-            target[entry][i] = Highcharts.merge(target[entry][i], configuration[entry][i]);
+            target[entry][i] = window.Highcharts.merge(target[entry][i], configuration[entry][i]);
           }
           delete configuration[entry];
         }
